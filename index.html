@@ -1,0 +1,741 @@
+<!DOCTYPE html>
+<html lang="it">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Allestimento Sala Meeting</title>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-color: #f4f4f4;
+        }
+
+        .modal-fade{
+            font-size: 7px;
+        }
+        header {
+            text-align: center;
+            color: blue;
+            font-size: 1.5em;
+            width: 900px;
+        }
+
+
+        #main {
+            width: 375px;
+            height: 700px;
+            min-height: 200px;
+            background-color: white;
+            border: 2px solid #ccc;
+            margin: 10px 0;
+            padding: 10px;
+            position: relative;
+        }
+
+
+        #comandi {
+            width: 90%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+        }
+
+
+        .button-group {
+            display: flex;
+            gap: 5px;
+        }
+
+
+        .palette-item {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 15px;
+            border-radius: 5px;
+            text-align: center;
+            cursor: pointer;
+            border: none;
+            font-size: 1em;
+            transition: background 0.3s ease;
+        }
+
+        .palette-item1 {
+            background-color: darkgreen;
+            color: white;
+            padding: 10px 15px;
+            border-radius: 5px;
+            text-align: center;
+            cursor: pointer;
+            border: none;
+            font-size: small;
+            transition: background 0.3s ease;
+        }
+
+
+        .palette-item:hover {
+            background-color: #0056b3;
+        }
+
+
+        #savedRoomsContainer {
+            width: 50%;
+            background-color: white;
+            padding: 5px;
+            border: 2px solid #ccc;
+        }
+
+
+        footer {
+            width: 100%;
+            text-align: center;
+            padding: 15px;
+            background-color: #007bff;
+            color: white;
+            margin-top: 10px;
+        }
+        .selected {
+    border: 2px solid #00f; /* Aggiungi un bordo blu agli oggetti selezionati */
+}
+button {
+    margin: 5px;
+    padding: 10px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <h1>Allestimento Sala Meeting</h1>
+       <!-- Button trigger modal -->
+<button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal">
+  dimensioni Sale
+  </button>
+  
+  <!-- Modal -->
+  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Dimensioni sale</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <br>
+        <div class="modal-body">
+            <table class="table table-sm" border="1">
+                <thead>
+                  <tr>
+                    <th>sala</th>
+                    <th>larghezza</th>
+                    <th>lunghezza</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Turchese</td>
+                    <td>7,50 mt</td>
+                    <td>14,00 mt</td>
+                  </tr>
+                  <tr>
+                    <td>Ametista</td>
+                    <td>9,40 mt</td>
+                    <td>14,00 mt</td>
+                  </tr>
+                  <tr>
+                    <td>Ambra</td>
+                    <td>9,00 mt</td>
+                    <td>6,25 mt</td>
+                  </tr>
+                  <tr>
+                    <td>Diamante</td>
+                    <td>7,50 mt</td>
+                    <td>4,80 mt</td>
+                  </tr>
+                  <tr>
+                    <td>Zaffiro</td>
+                    <td>7,90 mt</td>
+                    <td>6,20 mt</td>
+                  </tr>
+                  <tr>
+                    <td>Smeraldo</td>
+                    <td>7,90 mt</td>
+                    <td>6,80 mt</td>
+                  </tr>
+                  <tr>
+                    <td>Diaspro</td>
+                    <td>10,00 mt</td>
+                    <td>5,20 mt</td>
+                  </tr>
+                  <tr>
+                    <td>Onice</td>
+                    <td>3,30 mt</td>
+                    <td>4,00 mt</td>
+                  </tr>
+                  <tr>
+                    <td>Zaffiro_Smeraldo</td>
+                    <td>7,90 mt</td>
+                    <td>14,00 mt</td>
+                  </tr>
+                  <tr>
+                    <td>Amestista_Turchese</td>
+                    <td>16,90 mt</td>
+                    <td>14,00 mt</td>
+                  </tr>
+                  <tr>
+                    <td>Ametista_Turchese-Zaffiro_Smeraldo</td>
+                    <td>24,80 mt</td>
+                    <td>14,00 mt</td>
+                  </tr>
+                </tbody>
+              </table>
+              
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Chiudi</button>
+        </div>
+      </div>
+    </div>
+  </div>
+    </header>
+
+    <div id="oggetti" class="button-group container mt-3 mb-3 row">
+        <div class="palette-item1 col-1" data-type="sedia">Sedia</div>
+        <div class="palette-item1 col-1" data-type="tavolorett">Tav Rettang</div>
+        <div class="palette-item1 col-1" data-type="tavoloova">Tav Ovale</div>
+        <div class="palette-item1 col-1" data-type="tavoloqua">Tav quadrato</div>
+        <div class="palette-item1 col-1" data-type="podio">Podio</div>
+        <div class="palette-item1 col-1" data-type="microfonotav">Mic tavolo</div>
+        <div class="palette-item1 col-1" data-type="microfonowir">Mic wireless</div>
+        <div class="palette-item1 col-1" data-type="microfonoarch">Mic archetto</div>
+        <div class="palette-item1 col-1" data-type="asta">Asta</div>
+        <div class="palette-item1 col-1" data-type="colonna">Colonna</div>
+        <div class="palette-item1 col-1" data-type="porta">Porta</div>
+        <div class="palette-item1 col-1" data-type="desk">Desk</div>
+        <div class="palette-item1 col-1" data-type="cestino">Cestino</div>
+        <div class="palette-item1 col-1" data-type="presa">Presa</div>
+        <div class="palette-item1 col-1" data-type="schermo">Schermo</div>
+        <div class="palette-item1 col-1" data-type="videoproiettore">Videoproiettore</div>
+        <div class="palette-item1 col-1" data-type="lavagna">Lavagna</div>
+    </div>
+
+    <main id="main">
+        
+        <div id="meetingRoom"></div>
+    </main>
+
+    <div id="comandi">
+        <div class="button-group">
+            <div id="configuraSala" class="palette-item">Configura Sala</div>
+            <div id="saveConfig" class="palette-item">Salva Configurazione</div>
+            <div id="newConfig" class="palette-item">Nuova Configurazione</div>
+            <div id="savePDF" class="palette-item">Salva in PDF</div>
+            <button id="pasteSelected">Incolla  Selezionati</button>
+            <button id="deleteSelected">Elimina Selezionati</button>
+            <button id="rotateSelected">Ruota Selezionati</button>
+        </div>
+
+ 
+
+        <div id="savedRoomsContainer">
+            <h3>Sale Salvate</h3>
+            <ul id="savedRoomsList"></ul>
+        </div>
+    </div>
+
+    <footer id="areaDisplay">Area della sala mq: 105.00</footer>
+    <button id="salva">esporta configurazioni</button>
+
+    <script>
+       document.addEventListener("DOMContentLoaded", () => {
+        const meetingRoom = document.getElementById("main");
+        const savedRoomsList = document.getElementById("savedRoomsList");
+        const objectsContainer = document.getElementById("oggetti");
+        
+        
+    
+        let currentRoomIndex = -1;
+        let savedRooms = JSON.parse(localStorage.getItem('savedRooms')) || [];
+
+
+        document.getElementById("salva").addEventListener("click", () => {
+exportLocalStorage();
+        });
+
+        function exportLocalStorage() {
+    const data = JSON.stringify(localStorage, null, 2);
+    const blob = new Blob([data], { type: "application/json" });
+    const url = URL.createObjectURL(blob);
+
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "./img/configurazione_base.json";
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    
+    URL.revokeObjectURL(url);
+}
+
+// Chiamare la funzione per esportare il localStorage
+
+
+
+        // Funzione per aggiornare la lista delle stanze salvate
+        function updateSavedRoomsList() {
+            savedRoomsList.innerHTML = '';
+            savedRooms.forEach((room, index) => {
+                const li = document.createElement('li');
+                li.textContent = room.name;
+
+                const loadBtn = document.createElement('button');
+                loadBtn.textContent = 'Carica';
+                loadBtn.onclick = () => loadRoomConfiguration(index);
+                li.appendChild(loadBtn);
+
+                const deleteBtn = document.createElement('button');
+                deleteBtn.textContent = 'Elimina';
+                deleteBtn.onclick = () => deleteRoomConfiguration(index);
+                li.appendChild(deleteBtn);
+
+                savedRoomsList.appendChild(li);
+            });
+        }
+
+        // Salva la configurazione nel localStorage
+        document.getElementById("saveConfig").addEventListener("click", () => {
+            const roomName = prompt("Inserisci il nome per la configurazione:");
+            if (!roomName) {
+                alert("Nome non valido!");
+                return;
+            }
+
+            const roomObjects = [];
+            const roomElements = meetingRoom.querySelectorAll(".draggable-object");
+            roomElements.forEach(element => {
+                const img = element.querySelector("img");
+                const obj = {
+                    type: img.src,  // src dell'immagine
+                    x: element.offsetLeft,
+                    y: element.offsetTop,
+                    width: img.width,  // Salva la larghezza dell'immagine visibile
+                    height: img.height  // Salva l'altezza dell'immagine visibile
+                };
+                roomObjects.push(obj);
+            });
+
+            const newRoom = { name: roomName, objects: roomObjects };
+            
+            if (currentRoomIndex === -1) {
+                // Se nessuna configurazione è selezionata, aggiungiamo una nuova configurazione
+                savedRooms.push(newRoom);
+            } else {
+                // Se è selezionata una configurazione, aggiorniamo la configurazione esistente
+                savedRooms[currentRoomIndex] = newRoom;
+            }
+            
+            localStorage.setItem('savedRooms', JSON.stringify(savedRooms));
+            currentRoomIndex = -1;  // Resettiamo l'indice, non siamo più in modalità modifica
+
+            updateSavedRoomsList(); // Rinnova la lista delle sale salvate
+        });
+
+        // Funzione per eliminare la configurazione di una stanza
+        function deleteRoomConfiguration(index) {
+            // Rimuovi la stanza dalla lista utilizzando l'indice
+            savedRooms.splice(index, 1);
+
+            // Aggiorna la lista visibile delle stanze salvate
+            updateSavedRoomsList();
+
+            // Salva nel localStorage
+            saveSavedRoomsList();
+        }
+
+        // Funzione per salvare la lista delle stanze nel localStorage (opzionale)
+        function saveSavedRoomsList() {
+            localStorage.setItem('savedRooms', JSON.stringify(savedRooms));
+        }
+
+        // Funzione per caricare la configurazione della stanza
+        function loadRoomConfiguration(index) {
+            currentRoomIndex = index;
+            const room = savedRooms[index];
+            meetingRoom.innerHTML = '';  // Svuota la sala prima di caricare la configurazione
+
+            room.objects.forEach(obj => {
+                addObjectToRoomByDetails(obj.type, obj.x, obj.y, obj.width, obj.height);  // Passa anche le dimensioni
+            });
+        }
+
+        // Funzione per aggiungere oggetti nella stanza con le specifiche
+        function addObjectToRoomByDetails(type, x, y, width, height) {
+            const obj = document.createElement("div");
+            obj.classList.add("draggable-object");
+            obj.style.left = `${x}px`;
+            obj.style.top = `${y}px`;
+            obj.style.position = "absolute";
+            obj.style.cursor = "grab";
+
+            obj.style.width = `${width}px`;
+            obj.style.height = `${height}px`;
+
+            const img = document.createElement("img");
+            img.src = type;
+            img.style.width = "100%";
+            img.style.height = "100%";
+
+            obj.appendChild(img);
+            meetingRoom.appendChild(obj);
+
+            makeDraggable(obj);
+            obj.addEventListener("dblclick", () => toggleControls(obj));
+        }
+
+        // Funzione per gestire il click sugli oggetti
+        objectsContainer.addEventListener("click", (event) => {
+            if (event.target.classList.contains("palette-item1")) {
+                const type = event.target.dataset.type;
+                requestObjectDetails(type);
+            }
+        });
+
+        // Funzione per richiedere le specifiche dell'oggetto da aggiungere
+        function requestObjectDetails(type) {
+            const count = parseInt(prompt("Quanti oggetti vuoi inserire?", "1"), 10);
+            const direction = prompt("Inserire in verticale o orizzontale? (v/h)", "h");
+            const gap = parseInt(prompt("Distanza tra gli oggetti (px)?", "25"), 10);
+
+            if (isNaN(count) || isNaN(gap) || (direction !== "v" && direction !== "h")) {
+                alert("Input non valido!");
+                return;
+            }
+
+            meetingRoom.addEventListener("click", function placeObjects(event) {
+                const offsetX = event.offsetX;
+                const offsetY = event.offsetY;
+
+                for (let i = 0; i < count; i++) {
+                    let x = offsetX + (direction === "h" ? i * gap : 0);
+                    let y = offsetY + (direction === "v" ? i * gap : 0);
+                    addObjectToRoom(type, x, y);
+                }
+                meetingRoom.removeEventListener("click", placeObjects);
+            }, { once: true });
+        }
+
+        // Funzione per aggiungere un oggetto nella stanza
+        function addObjectToRoom(type, x, y) {
+            const obj = document.createElement("div");
+            obj.classList.add("draggable-object");
+            obj.style.left = `${x}px`;
+            obj.style.top = `${y}px`;
+            obj.style.position = "absolute";
+            obj.style.cursor = "grab";
+
+            const { width, height } = getObjectDimensions(type);
+
+            obj.style.width = `${width}px`;
+            obj.style.height = `${height}px`;
+
+            const img = document.createElement("img");
+            img.src = getImageSrc(type);
+            img.style.width = "100%";
+            img.style.height = "100%";
+
+            obj.appendChild(img);
+            meetingRoom.appendChild(obj);
+
+            makeDraggable(obj);
+            obj.addEventListener("dblclick", () => toggleControls(obj));
+        }
+
+        // Funzione per ottenere il percorso dell'immagine in base al tipo
+        function getImageSrc(type) {
+            const images = {
+                "sedia": "./img/sedia.png",
+                "tavolorett": "./img/tavolo.png",
+                "tavoloova": "./img/tavolo ovale.png",
+                "tavoloqua": "./img/tavolo quadrato.png",
+                "podio": "./img/podio.png",
+                "microfonotav": "./img/micro tavolo.png",
+                "microfonowir": "./img/microwireless.png",
+                "microfonoarch": "./img/microfonoarch.png",
+                "asta": "./img/asta.png",
+                "colonna": "./img/colonna.png",
+                "porta": "./img/porta.png",
+                "desk": "./img/desk.png",
+                "cestino": "./img/cestino.png",
+                "presa": "./img/presa.png",
+                "schermo": "./img/schermo.png",
+                "videoproiettore": "./img/videoproiettore.png",
+                "lavagna": "./img/lavagna.png"
+            };
+            return images[type] || "";
+        }
+
+        // Funzione per ottenere le dimensioni dell'oggetto in base al tipo
+        function getObjectDimensions(type) {
+            const dimensions = {
+                "sedia": { width: 25, height: 25 },
+                "tavolorett": { width: 92.5, height: 42.5 },
+                "tavoloova": { width: 100, height: 75 },
+                "tavoloqua": { width: 50, height: 55 },
+                "podio": { width: 30, height: 70 },
+                "microfonotav": { width: 40, height: 40 },
+                "microfonowir": { width: 40, height: 40 },
+                "microfonoarch": { width: 40, height: 40 },
+                "asta": { width: 50, height: 50 },
+                "colonna": { width: 30, height: 30 },
+                "porta": { width: 100, height: 40 },
+                "desk": { width: 100, height: 75 },
+                "cestino": { width: 20, height: 20 },
+                "presa": { width: 40, height: 40 },
+                "schermo": { width: 50, height: 50 },
+                "videoproiettore": { width: 40, height: 35 },
+                "lavagna": { width: 50, height: 50 }
+            };
+            return dimensions[type] || { width: 50, height: 50 };
+        }
+
+
+        let selectedObjects = [];
+
+
+        // Funzione per rendere l'elemento trascinabile
+        function makeDraggable(element) {
+    let offsetX, offsetY, isDragging = false;
+    let selectedElement = null;
+
+    element.addEventListener("mousedown", (event) => {
+        if (event.ctrlKey || event.metaKey) {
+            // Aggiungi alla selezione se CTRL (o CMD) è premuto
+            element.classList.toggle("selected");
+            if (element.classList.contains("selected")) {
+                selectedObjects.push(element);
+            } else {
+                selectedObjects = selectedObjects.filter(item => item !== element);
+            }
+        } else {
+            // Se non è premuto CTRL (o CMD), seleziona un solo oggetto
+            selectedObjects = [element];
+            element.classList.add("selected");
+        }
+
+        isDragging = true;
+        selectedElement = element;
+        offsetX = event.clientX - element.offsetLeft;
+        offsetY = event.clientY - element.offsetTop;
+        element.style.cursor = "grabbing";
+    });
+
+    document.addEventListener("mousemove", (event) => {
+        if (isDragging && selectedElement) {
+            selectedElement.style.left = `${event.clientX - offsetX}px`;
+            selectedElement.style.top = `${event.clientY - offsetY}px`;
+        }
+    });
+
+    document.addEventListener("mouseup", () => {
+        isDragging = false;
+        if (selectedElement) {
+            selectedElement.style.cursor = "grab";
+            selectedElement = null;
+        }
+    });
+}
+
+
+        // Funzione per attivare il pannello di controllo dell'oggetto
+        function toggleControls(element) {
+            let controls = element.querySelector(".object-controls");
+            if (controls) {
+                controls.remove();
+                return;
+            }
+            controls = document.createElement("div");
+            controls.classList.add("object-controls");
+
+            const deleteBtn = document.createElement("button");
+            deleteBtn.textContent = "Elimina";
+            deleteBtn.onclick = () => {
+                element.remove();
+            };
+            controls.appendChild(deleteBtn);
+
+            const resizeBtn = document.createElement("button");
+            resizeBtn.textContent = "Ridimensiona";
+            resizeBtn.onclick = () => {
+                let newWidth = prompt("Nuova larghezza (in px):");
+                let newHeight = prompt("Nuova altezza (in px):");
+                if (newWidth && newHeight) {
+                    element.style.width = newWidth + "px";
+                    element.style.height = newHeight + "px";
+                }
+            };
+            controls.appendChild(resizeBtn);
+
+            element.appendChild(controls);
+        }
+
+            // Funzione per configurare la sala
+            document.getElementById("configuraSala").addEventListener("click", () => {
+                const widthInMeters = parseFloat(prompt("Inserisci la larghezza della sala (in metri):"));
+                const lengthInMeters = parseFloat(prompt("Inserisci la lunghezza della sala (in metri):"));
+                const orientation = prompt("Inserire la direzione della sala (h o v?):").toLowerCase();
+
+                if (isNaN(widthInMeters) || isNaN(lengthInMeters) || (orientation !== "h" && orientation !== "v")) {
+                    alert("Dati non validi!");
+                    return;
+                }
+
+                const scale = 50;
+                if (orientation === "h") {
+                    meetingRoom.style.width = `${widthInMeters * scale}px`;
+                    meetingRoom.style.height = `${lengthInMeters * scale}px`;
+                    meetingRoom.style.flexDirection = "row";
+                } else {
+                    meetingRoom.style.width = `${lengthInMeters * scale}px`;
+                    meetingRoom.style.height = `${widthInMeters * scale}px`;
+                    meetingRoom.style.flexDirection = "column";
+                }
+                const area = widthInMeters * lengthInMeters
+                const areaDisplay = document.getElementById("areaDisplay");
+                areaDisplay.innerText = "area della sala: mq " + area
+            });
+
+       
+
+            // Funzione per creare una nuova configurazione (azzera la stanza)
+            document.getElementById("newConfig").addEventListener("click", () => {
+                meetingRoom.innerHTML = ''; // Resetta la stanza
+                alert("Nuova configurazione pronta!");
+            });
+
+            // Funzione per salvare la configurazione in PDF
+           document.getElementById("savePDF").addEventListener("click", () => {
+            html2canvas(document.querySelector("#main"), {
+                scale: 2,
+                useCORS: true,
+                allowTaint: true,
+                logging: true,
+                backgroundColor: null
+            }).then(canvas => {
+                const imgData = canvas.toDataURL('image/jpeg', 1.0);
+                const { jsPDF } = window.jspdf;
+                const doc = new jsPDF({
+                    orientation: "landscape",
+                    unit: "mm",
+                    format: "a3"
+                });
+
+                const pageWidth = doc.internal.pageSize.getWidth();
+                const pageHeight = doc.internal.pageSize.getHeight();
+                
+                const imgWidth = canvas.width * 0.264583;
+                const imgHeight = canvas.height * 0.264583;
+
+                const scale = Math.min(pageWidth / imgWidth, pageHeight / imgHeight) * 0.95;
+                
+                doc.addImage(imgData, 'JPEG', 
+                    (pageWidth - imgWidth * scale) / 2,
+                    (pageHeight - imgHeight * scale) / 2,
+                    imgWidth * scale,
+                    imgHeight * scale
+                );
+                
+                doc.save("sala_configurata.pdf");
+            });
+        });
+
+// Funzione per incollare gli oggetti selezionati
+document.getElementById("pasteSelected").addEventListener("click", () => {
+    if (selectedObjects.length === 0) {
+        alert("Seleziona almeno un oggetto da incollare.");
+        return;
+    }
+
+    selectedObjects.forEach((obj) => {
+        const newObj = obj.cloneNode(true);
+        newObj.style.left = `${parseInt(newObj.style.left) + 20}px`;  // Sposta leggermente a destra
+        newObj.style.top = `${parseInt(newObj.style.top) + 20}px`;   // Sposta leggermente in basso
+        meetingRoom.appendChild(newObj);
+
+        makeDraggable(newObj);  // Rendi l'oggetto incollato trascinabile
+        newObj.classList.remove("selected");  // Rimuovi la selezione
+    });
+
+    // Rimuove la classe 'selected' dagli oggetti originali e resetta la selezione
+    selectedObjects.forEach(obj => obj.classList.remove("selected"));
+    selectedObjects = [];
+});
+
+// Funzione per eliminare gli oggetti selezionati
+document.getElementById("deleteSelected").addEventListener("click", () => {
+    if (selectedObjects.length === 0) {
+        alert("Seleziona almeno un oggetto da eliminare.");
+        return;
+    }
+
+    selectedObjects.forEach((obj) => {
+        obj.remove();
+    });
+
+    // Reset selezione
+    selectedObjects = [];
+});
+
+// Funzione per ruotare gli oggetti selezionati
+document.getElementById("rotateSelected").addEventListener("click", () => {
+    if (selectedObjects.length === 0) {
+        alert("Seleziona almeno un oggetto da ruotare.");
+        return;
+    }
+
+    selectedObjects.forEach((obj) => {
+        // Ottiene l'angolo di rotazione attuale (se esiste)
+        let currentRotation = obj.style.transform.match(/rotate\((\d+)deg\)/);
+        let rotation = currentRotation ? parseInt(currentRotation[1]) : 0;
+
+        // Aggiunge 90 gradi alla rotazione attuale
+        rotation += 90;
+        obj.style.transform = `rotate(${rotation}deg)`;
+
+        // Rimuove la classe 'selected' dopo la rotazione
+        obj.classList.remove("selected");
+    });
+
+    // Reset selezione
+    selectedObjects = [];
+});
+
+
+            updateSavedRoomsList();
+        });
+    </script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+</body>
+
+</html>
